@@ -59,6 +59,46 @@
       // ❗ WARNING: except for `getAllReversed`, methods must respect the order of the integers
       // ❗ WARNING: note that none of the methods actually mutate the `ints` property
 
+      constructor(...args) {
+        return {
+          ints: [...args],
+
+          getAll() {
+            return this.ints.slice()
+          },
+          getEvens() {
+            return this.ints.filter((num) => num % 2 === 0)
+          },
+          getNegatives() {
+            return this.ints.filter((num) => num < 0)
+          },
+          getAllSquared() {
+            return this.ints.map((num) => num ** 2)
+          },
+          pop() {
+            //console.log(ints)
+            return this.ints.pop()
+          },
+          push(ints) {
+            this.ints.push(ints)
+            return this.ints
+          },
+          getEveryNth(n) {
+            const result = []
+            for (let i = 0; i < this.ints.length; i += n) {
+              result.push(this.ints[i])
+            }
+            return result
+          },
+          getAllReversed() {
+            const reversed = []
+            for (let i = this.ints.length -1; i >= 0; i--) {
+              reversed.push(this.ints[i])
+            }
+            return reversed
+          }
+        }
+      }
     }
 
     // 👉 CHALLENGE 2 NerfGun
@@ -77,6 +117,34 @@
       //      * When disengaging the safety, return "Safety disabled!"
       // 🌟 HINT: instances need to keep track of their maximum capacity as well as their current capacity
 
+      constructor(totalNumberOfProjectiles) {
+        this.capacity = totalNumberOfProjectiles;
+        this.currentCapacity = totalNumberOfProjectiles;
+        this.safetyOn = true;
+      }
+      shoot() {
+        if (this.currentCapacity > 0 && !this.safetyOn) {
+          this.currentCapacity--
+          return 'Bang!'
+        } else {
+          return 'Click!'
+        }
+      }
+      reload(amount) {
+        if (typeof amount === 'number' && amount > 0) {
+          this.currentCapacity += amount
+          if (this.currentCapacity > this.capacity) {
+            this.currentCapacity = this.capacity
+          }
+          return `${this.currentCapacity} projectiles left!`
+        } else {
+          return `Error reloading!`
+        }
+      }
+      toggleSafety() {
+        this.safetyOn = !this.safetyOn
+        return this.safetyOn ? 'Safety enabled!': 'Safety disabled!'
+      }
     }
 
     // 👉 CHALLENGE 3 EBook
