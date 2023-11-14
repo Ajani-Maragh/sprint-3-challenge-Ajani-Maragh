@@ -164,6 +164,23 @@
       // 🌟 HINT: remember about the `slice` method which strings and arrays have
       // ❗ Feel free to implement `back`, although this is not required nor graded
 
+      constructor(str, num) {
+        this.str = str;
+        this.num = num;
+        this.page = 0;
+       }
+       next() {
+        const beginning = this.page * this.num
+        const ending = beginning + this.num
+        const nextPage = this.str.slice(beginning, ending)
+
+        if (nextPage.length > 0) {
+          this.page++
+          return nextPage
+        } else {
+          return null
+        }
+       }
     }
 
     // 👉 CHALLENGE 4 AntFarm
@@ -199,6 +216,42 @@
       // 👉 HINT: if you are not feeling confident with map and filter, solve the problem with for loops,
       //      and with the piece of mind of all tests passing, refactor to use map/filter
 
+      constructor(...nameOfAnts) {
+        this.ants = nameOfAnts.map(name => ({name, health: 100 }))
+      }
+      work() {
+        if (this.ants.length === 0) {
+          return "No ants here. Did you work them to death?"
+        }
+        this.ants.forEach( ant => {
+          ant.health = ant.health > 20 ? ant.health - 20 : 0
+          
+        })
+        this.ants = this.ants.filter(ant => ant.health > 0)
+
+        return `${this.ants.length} ants starting work!`
+      }
+      feed(antName) {
+       let antFound = false
+
+       this.ants = this.ants.map(ant => {
+        if (ant.name === antName) {
+          const newHealth = ant.health + 15
+          antFound = true
+          return {...ant, health: newHealth > 100 ? 100 : newHealth}
+        }
+        return ant
+       });
+
+       if (antFound) {
+        
+        return 'Yum!'
+       } else {
+        return `${antName} not found!`
+       }
+
+      }
+    
     }
 
     // 🧪 TESTS, do not make any changes below this line ===================
