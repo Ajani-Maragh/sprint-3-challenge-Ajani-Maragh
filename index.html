@@ -216,43 +216,51 @@
       // 👉 HINT: if you are not feeling confident with map and filter, solve the problem with for loops,
       //      and with the piece of mind of all tests passing, refactor to use map/filter
 
-      constructor(...nameOfAnts) {
-        this.ants = nameOfAnts.map(name => ({name, health: 100 }))
+      constructor(...names) {
+        this.ants = names.map(name => ({name, health: 100 }))
       }
       work() {
-        if (this.ants.length === 0) {
+        
+        
+        const initialAntCount = this.ants.length
+        if (initialAntCount === 0) {
           return "No ants here. Did you work them to death?"
         }
-        this.ants.forEach( ant => {
-          ant.health = ant.health > 20 ? ant.health - 20 : 0
-          
-        })
-        this.ants = this.ants.filter(ant => ant.health > 0)
+        //console.log(`Initial Count:, ${initialCount}`)
 
-        return `${this.ants.length} ants starting work!`
+        this.ants = this.ants.map(ant => {
+          ant.health -= 20
+          return ant
+        }).filter(ant => ant.health > 0)
+       //console.log(this.ants)
+        //const remainingCount = this.ants.length
+        //console.log(`Remaining Count:, ${remainingCount}`)
+        
+
+
+        return `${initialAntCount} ants starting work!`
       }
-      feed(antName) {
+      feed(name) {
        let antFound = false
-
+       
        this.ants = this.ants.map(ant => {
-        if (ant.name === antName) {
-          const newHealth = ant.health + 15
+        if (ant.name === name) {
+          ant.health += 15
           antFound = true
-          return {...ant, health: newHealth > 100 ? 100 : newHealth}
         }
         return ant
-       });
-
+       })
        if (antFound) {
         
-        return 'Yum!'
+       return 'Yum!'
        } else {
-        return `${antName} not found!`
+        return `${name} not found!`
        }
 
       }
-    
     }
+    
+    
 
     // 🧪 TESTS, do not make any changes below this line ===================
     // 🧪 TESTS, do not make any changes below this line ===================
